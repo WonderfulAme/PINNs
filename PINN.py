@@ -12,8 +12,8 @@ import utilities as ut
 torch.set_default_dtype(torch.float)
 
 # Set random seeds for reproducibility
-torch.manual_seed(1618)
-np.random.seed(1618)
+torch.manual_seed(16)
+np.random.seed(16)
 
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -76,17 +76,15 @@ class PINNSolver:
     
     def prepare_testing_data(self):
         # Create uniform grid (keep on CPU for storage)
-        x_values = torch.linspace(self.x_min, self.x_max, self.total_points_x)
-        t_values = torch.linspace(self.t_min, self.t_max, self.total_points_t)
-        x_mesh, t_mesh = torch.meshgrid(x_values, t_values, indexing='ij')
-        
+        x_values = torch.linspace(self.x_min, self.x_max, self.total_points_x) # tensor([...])
+        t_values = torch.linspace(self.t_min, self.t_max, self.total_points_t) # tensor([...])
+        x_mesh, t_mesh = torch.meshgrid(x_values, t_values, indexing='ij') # tensors of shape (total_points_x, total_points_t)
         # Store grids for plotting (keep on CPU)
         self.x_grid = x_values
         self.t_grid = t_values
         
         # Compute exact solution on grid
-        y_exact = self.exact_solution(x_mesh, t_mesh)
-        
+        y_exact = self.exact_solution(x_mesh, t_mesh) # tensor of shape (total_points_x, total_points_t)
         # Flatten for testing and move to device
         self.x_test = torch.hstack((
             x_mesh.transpose(1, 0).flatten()[:, None],
@@ -107,23 +105,24 @@ class PINNSolver:
         left_boundary_x = torch.hstack((
             x_mesh[:, 0].reshape(-1, 1),
             t_mesh[:, 0].reshape(-1, 1)
-        ))
-        left_boundary_y = self.exact_solution(left_boundary_x[:, 0], left_boundary_x[:, 1])
-        
+        )) # Shape: (total_points_t, 2)
+
+        left_boundary_y = self.exact_solution(left_boundary_x[:, 0], left_boundary_x[:, 1]) # Shape: (total_points_t)
+
         # Bottom boundary: t = t_min for all x (initial condition)
         bottom_boundary_x = torch.hstack((
             x_mesh[0, :].reshape(-1, 1),
             t_mesh[0, :].reshape(-1, 1)
-        ))
-        bottom_boundary_y = self.exact_solution(bottom_boundary_x[:, 0], bottom_boundary_x[:, 1])
-        
+        )) # Shape: (total_points_x, 2)
+        bottom_boundary_y = torch.zeros(bottom_boundary_x.shape[0]) # Shape: (total_points_x)
         # Top boundary: t = t_max for all x
+
         top_boundary_x = torch.hstack((
             x_mesh[-1, :].reshape(-1, 1),
             t_mesh[-1, :].reshape(-1, 1)
-        ))
-        top_boundary_y = self.exact_solution(top_boundary_x[:, 0], top_boundary_x[:, 1])
-        
+        )) # Shape: (total_points_x, 2)
+        top_boundary_y = torch.zeros(top_boundary_x.shape[0]) # Shape: (total_points_x)
+ 
         # Combine all boundary data
         all_boundary_x = torch.vstack([left_boundary_x, bottom_boundary_x, top_boundary_x])
         all_boundary_y = torch.vstack([
@@ -198,7 +197,7 @@ class PINNSolver:
             
             return self.loss_function(pde_residual, self.residual_target)
         
-    def compute_total_loss(self):
+    def compute_total_loss(self, ):
         loss_boundary = self.compute_boundary_loss(self.x_boundary_train, self.y_boundary_train)
         loss_pde = self.compute_pde_loss(self.x_collocation_train)
         return loss_boundary + loss_pde
