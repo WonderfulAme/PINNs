@@ -15,6 +15,7 @@ PINNs/
 ├── utilities.py           # Funciones auxiliares para visualización
 ├── main_eq.ipynb          # Ejecutor general para múltiples PDEs
 ├── diffusion_eq.ipynb     # Ejemplo enfocado en la ecuación de difusión
+├── proy-final.pdf         # Informe final explicando como funciona la PINN y resultados
 │
 ├── README.md
 ```
@@ -22,9 +23,7 @@ PINNs/
 ## 📘 Explicación por archivo
 
 ## **1. `PINN.py` (archivo principal del proyecto)**
-Este archivo implementa la clase *PINNSolver*
-
-Responsable de:
+Este archivo implementa la clase *PINNSolver*. Responsable de:
 - Construir la red neuronal (MLP con activación Tanh)
 - Generar datos de entrenamiento:
   - condiciones de frontera
@@ -35,10 +34,8 @@ Responsable de:
   - residuo de la PDE  
   - error en las condiciones de frontera  
 - Entrenar la red con Adam  
-- Evaluar y graficar los resultados y errores  
-
-Es el archivo que centraliza toda la lógica matemática y computacional.
-
+- Evaluar y graficar los resultados y errores
+  
 ---
 
 ## **2. `utilities.py`**
@@ -46,9 +43,7 @@ Incluye funciones para visualizar soluciones en 2D y 3D:
 
 - `plot3D`
 - `plot3D_Matrix`
-
-Son útiles para análisis visual pero no son necesarias para entrenar.
-
+  
 ---
 
 ## **3. `main_eq.ipynb`**
@@ -56,12 +51,10 @@ El *motor general* del repositorio.
 Permite ejecutar cualquiera de las EDPs disponibles:
 
 ```
-
 "heat", "diffusion", "source", "wave", "burgers", "laplace2D"
+```
 
-````
-
-Cada ecuación cuenta con:
+Cada ecuación (de estos casos) cuenta con:
 - solución exacta
 - función de residuo de la PDE
 - configuración del dominio
@@ -74,13 +67,9 @@ CASE = "diffusion"
 ````
 
 ---
-
 ## **4. `diffusion_eq.ipynb`**
 
-Notebook simple y limpio para estudiar una sola ecuación:
-la **ecuación de difusión**.
-
-Perfecto para entender el funcionamiento del PINN sin distracciones.
+Notebook simple y limpio para estudiar una sola ecuación: la **ecuación de difusión**. Perfecto para entender el funcionamiento del PINN sin distracciones.
 
 ---
 
@@ -89,12 +78,8 @@ Perfecto para entender el funcionamiento del PINN sin distracciones.
 ## **1. Instalar dependencias**
 
 ```bash
-pip install -r requirements.txt
-```
+pip install
 
-Dependencias principales:
-
-```
 torch
 numpy
 matplotlib
@@ -125,20 +110,10 @@ La PINN:
 * construirá los puntos de entrenamiento
 * entrenará por N iteraciones
 * graficará:
-
+  
   * solución exacta
   * solución predicha
   * error absoluto
-
----
-
-# 📊 Ejemplo de salida
-
-La ejecución genera figuras que muestran:
-
-* Superficie 3D de la solución exacta
-* Predicción de la PINN
-* Error absoluto con escala de calor
 
 Además, se imprimen métricas cuantitativas:
 
@@ -182,7 +157,6 @@ elif CASE == "miecuacion":
 ```
 
 ¡Y listo!
-
 ---
 
 # 🎯 ¿Qué hace este código?
@@ -192,38 +166,14 @@ Cuando ejecutas un caso, el sistema:
 1. Define la ecuación diferencial y su solución exacta
 2. Construye un MLP totalmente conectado
 3. Genera los puntos de entrenamiento
-4. Calcula derivadas como:
-   [
-   u_x,\ u_t,\ u_{xx},\ u_{tt}
-   ]
-5. Construye la pérdida:
-   [
-   \mathcal{L} = \mathcal{L}*{BC} + \mathcal{L}*{PDE}
-   ]
+4. Calcula derivadas como: $u_x,\ u_t,\ u_{xx},\ u_{tt}$
+5. Construye la pérdida: $\mathcal{L} = \mathcal{L}*{BC} + \mathcal{L}*{PDE}$
 6. Entrena la red
 7. Evalúa la solución
 8. Genera gráficas y métricas
-
 ---
 
-# 💬 Comentarios finales
-
-Este repositorio es ideal para estudiantes, investigadores y curiosos que quieran:
-
-* aprender PINNs desde cero
-* experimentar con nuevas PDEs
-* extender el modelo fácilmente
-* estudiar fenónemos físicos con redes neuronales
-
-Si quieres agregar ejemplos más avanzados, documentación o visualizaciones interactivas, puedo ayudarte.
-
-```
-```
-
-
-
-
-## Resources
+## Recursos / Bibliografía
 
 - [Physics-Informed Neural Networks (YouTube)](https://www.youtube.com/watch?v=-zrY7P2dVC4)
 - [Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations](https://www.sciencedirect.com/science/article/pii/S0021999118307125)
