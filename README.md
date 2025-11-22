@@ -9,18 +9,14 @@ El objetivo del repositorio es servir como una **plantilla práctica** para:
 ## 📁 Estructura del repositorio
 
 ```
-
 PINNs/
 │
 ├── PINN.py                # Implementación principal del modelo PINN
 ├── utilities.py           # Funciones auxiliares para visualización
-│
 ├── main_eq.ipynb          # Ejecutor general para múltiples PDEs
 ├── diffusion_eq.ipynb     # Ejemplo enfocado en la ecuación de difusión
 │
 ├── README.md
-└── requirements.txt        # Dependencias del proyecto
-
 ```
 
 ## 📘 Explicación por archivo
