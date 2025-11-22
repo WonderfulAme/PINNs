@@ -119,7 +119,7 @@ Además, se imprimen métricas cuantitativas:
 
 * Error absoluto máximo
 * Error medio
-* Error relativo (L_2)
+* Error relativo $L_2$
 
 ---
 
