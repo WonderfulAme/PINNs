@@ -15,7 +15,7 @@ PINNs/
 ├── utilities.py           # Funciones auxiliares para visualización
 ├── main_eq.ipynb          # Ejecutor general para múltiples PDEs
 ├── diffusion_eq.ipynb     # Ejemplo enfocado en la ecuación de difusión
-├── proy-final.pdf         # Informe final explicando como funciona la PINN y resultados
+├── reporte-final.pdf         # Informe final explicando como funciona la PINN y resultados
 │
 ├── README.md
 ```
