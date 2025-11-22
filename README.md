@@ -167,7 +167,7 @@ Cuando ejecutas un caso, el sistema:
 2. Construye un MLP totalmente conectado
 3. Genera los puntos de entrenamiento
 4. Calcula derivadas como: $u_x,\ u_t,\ u_{xx},\ u_{tt}$
-5. Construye la pérdida: $\mathcal{L} = \mathcal{L}*{BC} + \mathcal{L}*{PDE}$
+5. Construye la pérdida: $\mathcal{L} = \mathcal{L}_{BC} + \mathcal{L}_{PDE}$
 6. Entrena la red
 7. Evalúa la solución
 8. Genera gráficas y métricas
